@@ -25,4 +25,6 @@ public class UserHateoasProvider : IHateoasProvider<User>
         model.AddPatchLink("deactivate", $"api/users/{user.Id}/deactivate")
             .When(() => user.CanBeDeactivated());
     }
+
+    public void Enrich(IHateoasContext context, object model) => Enrich(context, (User) model);
 }

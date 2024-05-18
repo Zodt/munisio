@@ -48,10 +48,13 @@ public class TweetHateoasProvider :
     /// 
     /// This method doesn't really need async support, so we just return a completed task.
     /// </summary>
-    public Task EnrichAsync(IHateoasContext context, HateoasCollection<Tweet> model)
+    public ValueTask EnrichAsync(IHateoasContext context, HateoasCollection<Tweet> model)
     {
         model.AddPostLink("addTweet", "api/tweets");
 
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
+    
+    public void Enrich(IHateoasContext context, object model) => Enrich(context, (Tweet) model);
+    public ValueTask EnrichAsync(IHateoasContext context, object model) => EnrichAsync(context, (HateoasCollection<Tweet>) model);
 }
